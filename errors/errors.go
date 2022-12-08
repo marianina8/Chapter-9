@@ -8,9 +8,9 @@ import (
 )
 
 const (
-	checkMark  = "\U00002705"
-	crossMark  = "\U0000274C"
-	cigarettes = "\U0001F6AC"
+	checkMark    = "\U00002705"
+	crossMark    = "\U0000274C"
+	votingBallot = "\U0001F5F3"
 )
 
 type customError struct {
@@ -39,33 +39,33 @@ func Examples() {
 	err = wrapping()
 	fmt.Printf("%+v\n", err)
 	// custom error(s)
-	err = buyCigarettes(age)
+	err = eligibleToVote(age)
 	if err != nil {
 		fmt.Println("error occurred: ", err)
 	}
 	fmt.Println()
-	err = buyCigarettes(21)
+	err = eligibleToVote(21)
 	if err != nil {
 		fmt.Println("error occurred: ", err)
 	}
 }
 
-func buyCigarettes(age int) error {
-	fmt.Printf("%s Attempting to purchase cigarettes at %d years old...\n", cigarettes, age)
-	minimumAge := 21
+func eligibleToVote(age int) error {
+	fmt.Printf("%s Attempting to vote at %d years old...\n", votingBallot, age)
+	minimumAge := 18
 	err := &customError{
-		Task: "buyCigarettes",
+		Task: "eligibleToVote",
 	}
 	if age < minimumAge && age > 0 {
 		years := minimumAge - age
-		err.Err = fmt.Errorf("too young to buy cigarettes, at %d, wait %d more years", age, years)
+		err.Err = fmt.Errorf("too young to vote, at %d, wait %d more years", age, years)
 		return err
 	}
 	if age < 0 {
 		err.Err = fmt.Errorf("age cannot be negative: %d", age)
 		return err
 	}
-	fmt.Println("Purchased.", checkMark)
+	fmt.Println("Voted.", checkMark)
 	return nil
 }
 
